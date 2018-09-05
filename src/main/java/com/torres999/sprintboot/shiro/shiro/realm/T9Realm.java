@@ -17,6 +17,8 @@ import java.util.Map;
 import java.util.Set;
 
 /**
+ * Shiro本身是用filter做的，现在提供两种方式进行验证，一种是realm（整个框架的一部分），另一种的集成AuthorizationFilter
+ *
  * @author t9
  */
 public class T9Realm extends AuthorizingRealm {
@@ -27,6 +29,7 @@ public class T9Realm extends AuthorizingRealm {
 
     //模拟数据库或缓存的数据
     Map<String, String> userMap = new HashMap<>();
+
     {
 //		Md5Hash md5 = new Md5Hash("123456");	//加密
         Md5Hash md5 = new Md5Hash("123456", SALT);//加盐
@@ -34,7 +37,6 @@ public class T9Realm extends AuthorizingRealm {
 //		userMap.put("Mark", "123456");
         super.setName("customRealm--");
     }
-
 
 
     /**

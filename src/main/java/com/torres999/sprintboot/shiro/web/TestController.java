@@ -17,8 +17,7 @@ public class TestController {
 
     // http://localhost:6181/shiro/hi?userName=Mark1&password=1231
     // 具体的用户名和密码参考ShiroConfiguration中的SimpleAccountRealm
-    @GetMapping(value = "/hi",
-            produces = "application/json;charset=utf-8")
+    @GetMapping(value = "/hi", produces = "application/json;charset=utf-8")
     public String findList(UsersRecord users) throws Exception {
         Subject subject = SecurityUtils.getSubject();
         UsernamePasswordToken token = new UsernamePasswordToken(users.getUserName(), users.getPassword());
@@ -69,5 +68,24 @@ public class TestController {
     @ResponseBody
     public String testPerms1() {
         return "test roles1 success";
+    }
+
+
+    @GetMapping(value = "/remember", produces = "application/json;charset=utf-8")
+    public String testRemember(UsersRecord users, boolean remember) throws Exception {
+        Subject subject = SecurityUtils.getSubject();
+        UsernamePasswordToken token = new UsernamePasswordToken(users.getUserName(), users.getPassword());
+
+        try {
+            token.setRememberMe(remember);
+            subject.login(token);
+        } catch (AuthenticationException e) {
+            return "没有权限!";
+        } catch (IllegalArgumentException e) {
+            return "没有权限! SessionContext must be an HTTP compatible implementation.";
+        }
+
+
+        return "Hello World!";
     }
 }
