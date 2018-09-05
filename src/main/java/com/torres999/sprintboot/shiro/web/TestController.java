@@ -52,4 +52,22 @@ public class TestController {
     public String testRole() {
         return "test role success";
     }
+
+
+    /**
+     * 以下两个方法是用来测试ShiroConfiguration中的ShiroFilterFactoryBean
+     *
+     * @return
+     */
+    @RequestMapping(value = "/testPerms", method = RequestMethod.GET)
+    @ResponseBody
+    public String testPerms() {
+        return "test roles success";
+    }
+
+    @RequestMapping(value = "/testPerms1", method = RequestMethod.GET)
+    @ResponseBody
+    public String testPerms1() {
+        return "test roles1 success";
+    }
 }
