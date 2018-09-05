@@ -1,0 +1,10 @@
+server:
+    port: 6181
+    context-path: /shiro
+
+spring:
+    datasource:
+        driver-class-name: com.mysql.jdbc.Driver
+        url: jdbc:mysql://localhost:3306/shiro
+        username: root
+        password: 123456
