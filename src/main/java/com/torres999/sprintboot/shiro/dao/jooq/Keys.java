@@ -4,18 +4,24 @@
 package com.torres999.sprintboot.shiro.dao.jooq;
 
 
-import com.torres999.sprintboot.shiro.dao.jooq.tables.Author;
-import com.torres999.sprintboot.shiro.dao.jooq.tables.Book;
-import com.torres999.sprintboot.shiro.dao.jooq.tables.GirlEntity;
-import com.torres999.sprintboot.shiro.dao.jooq.tables.records.AuthorRecord;
-import com.torres999.sprintboot.shiro.dao.jooq.tables.records.BookRecord;
-import com.torres999.sprintboot.shiro.dao.jooq.tables.records.GirlEntityRecord;
+import com.torres999.sprintboot.shiro.dao.jooq.tables.Permission;
+import com.torres999.sprintboot.shiro.dao.jooq.tables.Role;
+import com.torres999.sprintboot.shiro.dao.jooq.tables.RolesPermissions;
+import com.torres999.sprintboot.shiro.dao.jooq.tables.UserRoles;
+import com.torres999.sprintboot.shiro.dao.jooq.tables.Users;
+import com.torres999.sprintboot.shiro.dao.jooq.tables.records.PermissionRecord;
+import com.torres999.sprintboot.shiro.dao.jooq.tables.records.RoleRecord;
+import com.torres999.sprintboot.shiro.dao.jooq.tables.records.RolesPermissionsRecord;
+import com.torres999.sprintboot.shiro.dao.jooq.tables.records.UserRolesRecord;
+import com.torres999.sprintboot.shiro.dao.jooq.tables.records.UsersRecord;
 
 import javax.annotation.Generated;
 
+import org.jooq.ForeignKey;
 import org.jooq.Identity;
 import org.jooq.UniqueKey;
 import org.jooq.impl.AbstractKeys;
+import org.jooq.types.UInteger;
 
 
 /**
@@ -36,34 +42,55 @@ public class Keys {
     // IDENTITY definitions
     // -------------------------------------------------------------------------
 
-    public static final Identity<AuthorRecord, Integer> IDENTITY_AUTHOR = Identities0.IDENTITY_AUTHOR;
-    public static final Identity<GirlEntityRecord, Integer> IDENTITY_GIRL_ENTITY = Identities0.IDENTITY_GIRL_ENTITY;
+    public static final Identity<PermissionRecord, UInteger> IDENTITY_PERMISSION = Identities0.IDENTITY_PERMISSION;
+    public static final Identity<RoleRecord, UInteger> IDENTITY_ROLE = Identities0.IDENTITY_ROLE;
+    public static final Identity<RolesPermissionsRecord, UInteger> IDENTITY_ROLES_PERMISSIONS = Identities0.IDENTITY_ROLES_PERMISSIONS;
+    public static final Identity<UsersRecord, UInteger> IDENTITY_USERS = Identities0.IDENTITY_USERS;
+    public static final Identity<UserRolesRecord, UInteger> IDENTITY_USER_ROLES = Identities0.IDENTITY_USER_ROLES;
 
     // -------------------------------------------------------------------------
     // UNIQUE and PRIMARY KEY definitions
     // -------------------------------------------------------------------------
 
-    public static final UniqueKey<AuthorRecord> KEY_AUTHOR_PRIMARY = UniqueKeys0.KEY_AUTHOR_PRIMARY;
-    public static final UniqueKey<BookRecord> KEY_BOOK_PRIMARY = UniqueKeys0.KEY_BOOK_PRIMARY;
-    public static final UniqueKey<GirlEntityRecord> KEY_GIRL_ENTITY_PRIMARY = UniqueKeys0.KEY_GIRL_ENTITY_PRIMARY;
+    public static final UniqueKey<PermissionRecord> KEY_PERMISSION_PRIMARY = UniqueKeys0.KEY_PERMISSION_PRIMARY;
+    public static final UniqueKey<RoleRecord> KEY_ROLE_PRIMARY = UniqueKeys0.KEY_ROLE_PRIMARY;
+    public static final UniqueKey<RolesPermissionsRecord> KEY_ROLES_PERMISSIONS_PRIMARY = UniqueKeys0.KEY_ROLES_PERMISSIONS_PRIMARY;
+    public static final UniqueKey<UsersRecord> KEY_USERS_PRIMARY = UniqueKeys0.KEY_USERS_PRIMARY;
+    public static final UniqueKey<UserRolesRecord> KEY_USER_ROLES_PRIMARY = UniqueKeys0.KEY_USER_ROLES_PRIMARY;
 
     // -------------------------------------------------------------------------
     // FOREIGN KEY definitions
     // -------------------------------------------------------------------------
 
+    public static final ForeignKey<RolesPermissionsRecord, PermissionRecord> PERMISSION_ID外键 = ForeignKeys0.PERMISSION_ID外键;
+    public static final ForeignKey<RolesPermissionsRecord, RoleRecord> ROLE_ID外键1 = ForeignKeys0.ROLE_ID外键1;
+    public static final ForeignKey<UserRolesRecord, UsersRecord> USER_ID外键 = ForeignKeys0.USER_ID外键;
+    public static final ForeignKey<UserRolesRecord, RoleRecord> ROLE_ID外键 = ForeignKeys0.ROLE_ID外键;
 
     // -------------------------------------------------------------------------
     // [#1459] distribute members to avoid static initialisers > 64kb
     // -------------------------------------------------------------------------
 
     private static class Identities0 extends AbstractKeys {
-        public static Identity<AuthorRecord, Integer> IDENTITY_AUTHOR = createIdentity(Author.AUTHOR, Author.AUTHOR.ID);
-        public static Identity<GirlEntityRecord, Integer> IDENTITY_GIRL_ENTITY = createIdentity(GirlEntity.GIRL_ENTITY, GirlEntity.GIRL_ENTITY.ID);
+        public static Identity<PermissionRecord, UInteger> IDENTITY_PERMISSION = createIdentity(Permission.PERMISSION, Permission.PERMISSION.PERMISSION_ID);
+        public static Identity<RoleRecord, UInteger> IDENTITY_ROLE = createIdentity(Role.ROLE, Role.ROLE.ROLE_ID);
+        public static Identity<RolesPermissionsRecord, UInteger> IDENTITY_ROLES_PERMISSIONS = createIdentity(RolesPermissions.ROLES_PERMISSIONS, RolesPermissions.ROLES_PERMISSIONS.ID);
+        public static Identity<UsersRecord, UInteger> IDENTITY_USERS = createIdentity(Users.USERS, Users.USERS.USER_ID);
+        public static Identity<UserRolesRecord, UInteger> IDENTITY_USER_ROLES = createIdentity(UserRoles.USER_ROLES, UserRoles.USER_ROLES.ID);
     }
 
     private static class UniqueKeys0 extends AbstractKeys {
-        public static final UniqueKey<AuthorRecord> KEY_AUTHOR_PRIMARY = createUniqueKey(Author.AUTHOR, "KEY_author_PRIMARY", Author.AUTHOR.ID);
-        public static final UniqueKey<BookRecord> KEY_BOOK_PRIMARY = createUniqueKey(Book.BOOK, "KEY_book_PRIMARY", Book.BOOK.ID);
-        public static final UniqueKey<GirlEntityRecord> KEY_GIRL_ENTITY_PRIMARY = createUniqueKey(GirlEntity.GIRL_ENTITY, "KEY_girl_entity_PRIMARY", GirlEntity.GIRL_ENTITY.ID);
+        public static final UniqueKey<PermissionRecord> KEY_PERMISSION_PRIMARY = createUniqueKey(Permission.PERMISSION, "KEY_permission_PRIMARY", Permission.PERMISSION.PERMISSION_ID);
+        public static final UniqueKey<RoleRecord> KEY_ROLE_PRIMARY = createUniqueKey(Role.ROLE, "KEY_role_PRIMARY", Role.ROLE.ROLE_ID);
+        public static final UniqueKey<RolesPermissionsRecord> KEY_ROLES_PERMISSIONS_PRIMARY = createUniqueKey(RolesPermissions.ROLES_PERMISSIONS, "KEY_roles_permissions_PRIMARY", RolesPermissions.ROLES_PERMISSIONS.ID);
+        public static final UniqueKey<UsersRecord> KEY_USERS_PRIMARY = createUniqueKey(Users.USERS, "KEY_users_PRIMARY", Users.USERS.USER_ID);
+        public static final UniqueKey<UserRolesRecord> KEY_USER_ROLES_PRIMARY = createUniqueKey(UserRoles.USER_ROLES, "KEY_user_roles_PRIMARY", UserRoles.USER_ROLES.ID);
+    }
+
+    private static class ForeignKeys0 extends AbstractKeys {
+        public static final ForeignKey<RolesPermissionsRecord, PermissionRecord> PERMISSION_ID外键 = createForeignKey(com.torres999.sprintboot.shiro.dao.jooq.Keys.KEY_PERMISSION_PRIMARY, RolesPermissions.ROLES_PERMISSIONS, "permission_id外键", RolesPermissions.ROLES_PERMISSIONS.PERMISSION_ID);
+        public static final ForeignKey<RolesPermissionsRecord, RoleRecord> ROLE_ID外键1 = createForeignKey(com.torres999.sprintboot.shiro.dao.jooq.Keys.KEY_ROLE_PRIMARY, RolesPermissions.ROLES_PERMISSIONS, "role_id外键1", RolesPermissions.ROLES_PERMISSIONS.ROLE_ID);
+        public static final ForeignKey<UserRolesRecord, UsersRecord> USER_ID外键 = createForeignKey(com.torres999.sprintboot.shiro.dao.jooq.Keys.KEY_USERS_PRIMARY, UserRoles.USER_ROLES, "user_id外键", UserRoles.USER_ROLES.USER_ID);
+        public static final ForeignKey<UserRolesRecord, RoleRecord> ROLE_ID外键 = createForeignKey(com.torres999.sprintboot.shiro.dao.jooq.Keys.KEY_ROLE_PRIMARY, UserRoles.USER_ROLES, "role_id外键", UserRoles.USER_ROLES.ROLE_ID);
     }
 }

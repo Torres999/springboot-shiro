@@ -4,10 +4,11 @@
 package com.torres999.sprintboot.shiro.dao.jooq;
 
 
-import com.torres999.sprintboot.shiro.dao.jooq.tables.Author;
-import com.torres999.sprintboot.shiro.dao.jooq.tables.Book;
-import com.torres999.sprintboot.shiro.dao.jooq.tables.GirlEntity;
-import com.torres999.sprintboot.shiro.dao.jooq.tables.TestIdx;
+import com.torres999.sprintboot.shiro.dao.jooq.tables.Permission;
+import com.torres999.sprintboot.shiro.dao.jooq.tables.Role;
+import com.torres999.sprintboot.shiro.dao.jooq.tables.RolesPermissions;
+import com.torres999.sprintboot.shiro.dao.jooq.tables.UserRoles;
+import com.torres999.sprintboot.shiro.dao.jooq.tables.Users;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -33,7 +34,7 @@ import org.jooq.impl.SchemaImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Shiro extends SchemaImpl {
 
-    private static final long serialVersionUID = 1314428645;
+    private static final long serialVersionUID = 2132001396;
 
     /**
      * The reference instance of <code>shiro</code>
@@ -41,24 +42,29 @@ public class Shiro extends SchemaImpl {
     public static final Shiro SHIRO = new Shiro();
 
     /**
-     * The table <code>shiro.author</code>.
+     * The table <code>shiro.permission</code>.
      */
-    public final Author AUTHOR = com.torres999.sprintboot.shiro.dao.jooq.tables.Author.AUTHOR;
+    public final Permission PERMISSION = com.torres999.sprintboot.shiro.dao.jooq.tables.Permission.PERMISSION;
 
     /**
-     * The table <code>shiro.book</code>.
+     * The table <code>shiro.role</code>.
      */
-    public final Book BOOK = com.torres999.sprintboot.shiro.dao.jooq.tables.Book.BOOK;
+    public final Role ROLE = com.torres999.sprintboot.shiro.dao.jooq.tables.Role.ROLE;
 
     /**
-     * The table <code>shiro.girl_entity</code>.
+     * The table <code>shiro.roles_permissions</code>.
      */
-    public final GirlEntity GIRL_ENTITY = com.torres999.sprintboot.shiro.dao.jooq.tables.GirlEntity.GIRL_ENTITY;
+    public final RolesPermissions ROLES_PERMISSIONS = com.torres999.sprintboot.shiro.dao.jooq.tables.RolesPermissions.ROLES_PERMISSIONS;
 
     /**
-     * test table
+     * The table <code>shiro.users</code>.
      */
-    public final TestIdx TEST_IDX = com.torres999.sprintboot.shiro.dao.jooq.tables.TestIdx.TEST_IDX;
+    public final Users USERS = com.torres999.sprintboot.shiro.dao.jooq.tables.Users.USERS;
+
+    /**
+     * The table <code>shiro.user_roles</code>.
+     */
+    public final UserRoles USER_ROLES = com.torres999.sprintboot.shiro.dao.jooq.tables.UserRoles.USER_ROLES;
 
     /**
      * No further instances allowed
@@ -85,9 +91,10 @@ public class Shiro extends SchemaImpl {
 
     private final List<Table<?>> getTables0() {
         return Arrays.<Table<?>>asList(
-            Author.AUTHOR,
-            Book.BOOK,
-            GirlEntity.GIRL_ENTITY,
-            TestIdx.TEST_IDX);
+            Permission.PERMISSION,
+            Role.ROLE,
+            RolesPermissions.ROLES_PERMISSIONS,
+            Users.USERS,
+            UserRoles.USER_ROLES);
     }
 }
