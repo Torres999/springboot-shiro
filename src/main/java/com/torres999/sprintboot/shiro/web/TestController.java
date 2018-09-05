@@ -4,9 +4,9 @@ import com.torres999.sprintboot.shiro.dao.jooq.tables.records.UsersRecord;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.apache.shiro.subject.Subject;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author t9
@@ -27,8 +27,29 @@ public class TestController {
             subject.login(token);
         } catch (AuthenticationException e) {
             return "没有权限!";
+        } catch (IllegalArgumentException e) {
+            return "没有权限! SessionContext must be an HTTP compatible implementation.";
         }
 
+        if (subject.hasRole("admin")) {
+            return "有管理员权限!";
+        }
+
+
         return "Hello World!";
+    }
+
+
+    /**
+     * 通过注解设置角色权限为admin才可访问，但是没有成功
+     * 用来测试这个url和ShiroConfiguration中的account的role不一样，永远不能访问成功
+     *
+     * @return
+     */
+    @RequiresRoles("admin1")
+    @RequestMapping(value = "/testRole", method = RequestMethod.GET)
+    @ResponseBody
+    public String testRole() {
+        return "test role success";
     }
 }

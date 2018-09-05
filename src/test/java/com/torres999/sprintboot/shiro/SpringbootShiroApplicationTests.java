@@ -1,10 +1,8 @@
 package com.torres999.sprintboot.shiro;
 
 import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.mgt.DefaultSecurityManager;
 import org.apache.shiro.realm.jdbc.JdbcRealm;
-import org.apache.shiro.subject.Subject;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -27,14 +25,14 @@ public class SpringbootShiroApplicationTests {
         defaultSecurityManager.setRealm(jdbcRealm);
 
         SecurityUtils.setSecurityManager(defaultSecurityManager);
-        Subject subject = SecurityUtils.getSubject();
 
-        UsernamePasswordToken token = new UsernamePasswordToken("Mark", "1231");
-        subject.login(token);
+        // 以下是校验方法
+//        Subject subject = SecurityUtils.getSubject();
 
-        System.out.println(subject.isAuthenticated());
+//        UsernamePasswordToken token = new UsernamePasswordToken("Mark", "1231");
+//        subject.login(token);
 
-//		subject.checkPermission("");
-//		subject.checkRoles("admin", "admin1");
+//        subject.checkPermission("");
+//        subject.checkRoles("admin", "admin1");
     }
 }
