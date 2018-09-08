@@ -1,6 +1,8 @@
 package com.torres999.sprintboot.shiro.web;
 
 import com.torres999.sprintboot.shiro.dao.jooq.tables.records.UsersRecord;
+import com.torres999.sprintboot.shiro.utils.Roles;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 /**
  * @author t9
  */
+@Slf4j
 @RestController
 public class TestController {
 
@@ -20,6 +23,9 @@ public class TestController {
     @GetMapping(value = "/hi", produces = "application/json;charset=utf-8")
     public String findList(UsersRecord users) throws Exception {
         Subject subject = SecurityUtils.getSubject();
+        log.info("*********************************");
+        log.info("get a request, subject is " + subject.toString());
+        log.info("*********************************");
         UsernamePasswordToken token = new UsernamePasswordToken(users.getUserName(), users.getPassword());
 
         try {
@@ -30,8 +36,12 @@ public class TestController {
             return "没有权限! SessionContext must be an HTTP compatible implementation.";
         }
 
-        if (subject.hasRole("admin")) {
-            return "有管理员权限!";
+        if (subject.hasRole(Roles.ADMIN)) {
+            return "有admin权限!";
+        }
+
+        if (subject.hasRole(Roles.MANAGER)) {
+            return "有manager权限!";
         }
 
 
@@ -45,7 +55,7 @@ public class TestController {
      *
      * @return
      */
-    @RequiresRoles("admin1")
+    @RequiresRoles(Roles.ADMIN)
     @RequestMapping(value = "/testRole", method = RequestMethod.GET)
     @ResponseBody
     public String testRole() {

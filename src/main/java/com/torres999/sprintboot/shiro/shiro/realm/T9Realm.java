@@ -1,5 +1,7 @@
 package com.torres999.sprintboot.shiro.shiro.realm;
 
+import com.torres999.sprintboot.shiro.utils.Roles;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -21,10 +23,11 @@ import java.util.Set;
  *
  * @author t9
  */
+@Slf4j
 public class T9Realm extends AuthorizingRealm {
 
     // 盐
-    private final static String SALT = "Mark";
+    private final static String SALT = "TTTTT999999";
 
 
     //模拟数据库或缓存的数据
@@ -32,21 +35,30 @@ public class T9Realm extends AuthorizingRealm {
 
     {
 //		Md5Hash md5 = new Md5Hash("123456");	//加密
-        Md5Hash md5 = new Md5Hash("123456", SALT);//加盐
+        Md5Hash md5 = new Md5Hash("1234567", SALT);//加盐
         userMap.put("Mark", md5.toString());
 //		userMap.put("Mark", "123456");
         super.setName("customRealm--");
     }
 
+    public static void main(String[] args) {
+        Md5Hash md5 = new Md5Hash("1234567", SALT);//加盐
+        System.out.println("args = [" + md5 + "]");
+    }
+
 
     /**
      * 授权
+     * 默认是从缓存中获取
      *
      * @param principalCollection
      * @return
      */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
+        log.info("---------------------------------------------");
+        log.info("Method doGetAuthorizationInfo been executed!");
+        log.info("---------------------------------------------");
         String username = (String) principalCollection.getPrimaryPrincipal();
         // 从数据库或者缓存中获得角色数据
         Set<String> roles = getRolesByUserName(username);
@@ -68,8 +80,7 @@ public class T9Realm extends AuthorizingRealm {
 
     private Set<String> getRolesByUserName(String username) {
         Set<String> sets = new HashSet<>();
-        sets.add("admin");
-        sets.add("user");
+        sets.add(Roles.MANAGER);
         return sets;
     }
 
@@ -83,12 +94,18 @@ public class T9Realm extends AuthorizingRealm {
      */
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
+        log.info("---------------------------------------------");
+        log.info("Method doGetAuthenticationInfo been executed!");
+        log.info("---------------------------------------------");
         // 1.从主体传过来的认证信息中，获得用户名
         String username = (String) authenticationToken.getPrincipal();
 
         // 2.通过用户名到数据库中获取凭证
         String password = getPasswordByUsername(username);
         if (password == null) {
+            log.info("---------------------------------------------");
+            log.info("Don't find password!");
+            log.info("---------------------------------------------");
             return null;
         }
         SimpleAuthenticationInfo simpleAuthenticationInfo = new SimpleAuthenticationInfo("Mark", password,

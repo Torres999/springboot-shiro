@@ -1,7 +1,8 @@
 package com.torres999.sprintboot.shiro.shiro;
 
+import com.torres999.sprintboot.shiro.shiro.realm.T9Realm;
+import com.torres999.sprintboot.shiro.utils.Roles;
 import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.mgt.DefaultSecurityManager;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.realm.SimpleAccountRealm;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
@@ -12,7 +13,9 @@ import org.apache.shiro.web.servlet.SimpleCookie;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -28,19 +31,19 @@ public class ShiroConfiguration {
      *
      * @return
      */
-    @Bean
-    public DefaultSecurityManager getDefaultSecurityManager() { //该方式注解@RequiresRoles不会生效
-        SimpleAccountRealm simpleAccountRealm = new SimpleAccountRealm();
-        simpleAccountRealm.addAccount("Mark1", "1231", "admin");
-
-        DefaultSecurityManager defaultSecurityManager = new DefaultSecurityManager();
-        defaultSecurityManager.setRealm(simpleAccountRealm);
-
-        SecurityUtils.setSecurityManager(defaultSecurityManager);
-
-
-        return defaultSecurityManager;
-    }
+//    @Bean
+//    public DefaultSecurityManager getDefaultSecurityManager() { //该方式注解@RequiresRoles不会生效
+//        SimpleAccountRealm simpleAccountRealm = new SimpleAccountRealm();
+//        simpleAccountRealm.addAccount("Mark1", "1231", "admin");
+//
+//        DefaultSecurityManager defaultSecurityManager = new DefaultSecurityManager();
+//        defaultSecurityManager.setRealm(simpleAccountRealm);
+//
+//        SecurityUtils.setSecurityManager(defaultSecurityManager);
+//
+//
+//        return defaultSecurityManager;
+//    }
 
     /**
      * 开启shiro aop注解支持. 使用代理方式;所以需要开启代码支持;但是测试没成功
@@ -101,10 +104,18 @@ public class ShiroConfiguration {
     @Bean
     public SecurityManager securityManager() {
         SimpleAccountRealm simpleAccountRealm = new SimpleAccountRealm();
-        simpleAccountRealm.addAccount("Mark1", "1231", "admin1");
+        simpleAccountRealm.addAccount("Mark12", "12311", Roles.ADMIN);//用这个用户访问密码不需要加盐
 
-        DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
-        securityManager.setRealm(simpleAccountRealm);
+        T9Realm t9Realm = new T9Realm();//用这里面的用户访问，传过来的密码需要加盐
+
+        List list = new ArrayList<>();
+        list.add(simpleAccountRealm);
+        list.add(t9Realm);
+
+        DefaultWebSecurityManager securityManager;
+        securityManager = new DefaultWebSecurityManager();
+//        securityManager.setRealm(simpleAccountRealm);
+        securityManager.setRealms(list);
 
         SecurityUtils.setSecurityManager(securityManager);
 
