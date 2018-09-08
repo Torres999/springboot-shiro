@@ -15,6 +15,7 @@ import org.springframework.context.annotation.Configuration;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+
 /**
  * @author t9
  */
@@ -23,6 +24,7 @@ public class ShiroConfiguration {
 
     /**
      * 有了SecurityManager，好像整个方法不生效了
+     * 主要的方法，但是可以使用意外一种形式：securityManager()
      *
      * @return
      */
@@ -92,6 +94,7 @@ public class ShiroConfiguration {
     /**
      * 配合上一个方法使用，否则启动报错。
      * 但是不用上一个方法的时候，单独打开这个方法会报：SessionContext must be an HTTP compatible implementation.
+     * 主要的方法，但是可以使用意外一种形式：getDefaultSecurityManager()
      *
      * @return
      */
