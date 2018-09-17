@@ -1,0 +1,19 @@
+server:
+    port: 6181
+    context-path: /shiro
+
+spring:
+    profiles:
+        active: @profiles.active@
+    mvc:
+        view:
+          prefix: /WEB-INF/jsp/
+          suffix: .jsp
+          viewClass: org.springframework.web.servlet.view.JstlView
+    http:
+        encoding:
+          force: true
+          charset: UTF-8
+          enabled: true
+    jooq:
+        sql-dialect: mysql

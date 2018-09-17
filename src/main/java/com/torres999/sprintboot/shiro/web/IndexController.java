@@ -17,8 +17,8 @@ public class IndexController {
         return modelAndView;
     }
 
-    @RequestMapping("/login")
-    public String login() {
-        return "login";
+    @RequestMapping("/403")
+    public String t9Error() {
+        return "403";
     }
 }

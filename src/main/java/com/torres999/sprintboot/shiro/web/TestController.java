@@ -1,12 +1,15 @@
 package com.torres999.sprintboot.shiro.web;
 
-import com.torres999.sprintboot.shiro.dao.jooq.tables.records.UsersRecord;
+import com.torres999.sprintboot.shiro.dao.jooq.tables.pojos.T9User;
+import com.torres999.sprintboot.shiro.dao.jooq.tables.records.T9UserRecord;
 import com.torres999.sprintboot.shiro.utils.Roles;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authz.annotation.RequiresRoles;
+import org.apache.shiro.authz.annotation.RequiresUser;
 import org.apache.shiro.subject.Subject;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,12 +24,14 @@ public class TestController {
     // http://localhost:6181/shiro/hi?userName=Mark1&password=1231
     // 具体的用户名和密码参考ShiroConfiguration中的SimpleAccountRealm
     @GetMapping(value = "/hi", produces = "application/json;charset=utf-8")
-    public String findList(UsersRecord users) throws Exception {
+    public String findList() throws Exception {
         Subject subject = SecurityUtils.getSubject();
-        log.info("*********************************");
-        log.info("get a request, subject is " + subject.toString());
-        log.info("*********************************");
-        UsernamePasswordToken token = new UsernamePasswordToken(users.getUserName(), users.getPassword());
+        log.info("******************************************************************");
+        log.info("Get a request, subject is :{}", ReflectionToStringBuilder.toString(subject));
+        log.info("******************************************************************");
+        T9User t9User = (T9User) subject.getPrincipal();
+        UsernamePasswordToken token = new UsernamePasswordToken(t9User.getUsername(), t9User.getPassword());
+        log.info("UsernamePassword token:{}", ReflectionToStringBuilder.toString(token));
 
         try {
             subject.login(token);
@@ -50,7 +55,7 @@ public class TestController {
 
 
     /**
-     * 通过注解设置角色权限为admin才可访问，但是没有成功
+     * 通过注解设置角色权限为admin才可访问
      * 用来测试这个url和ShiroConfiguration中的account的role不一样，永远不能访问成功
      *
      * @return
@@ -60,6 +65,13 @@ public class TestController {
     @ResponseBody
     public String testRole() {
         return "test role success";
+    }
+
+    @RequiresUser
+    @RequestMapping(value = "/testUser", method = RequestMethod.GET)
+    @ResponseBody
+    public String testUser() {
+        return "test User success";
     }
 
 
@@ -82,9 +94,9 @@ public class TestController {
 
 
     @GetMapping(value = "/remember", produces = "application/json;charset=utf-8")
-    public String testRemember(UsersRecord users, boolean remember) throws Exception {
+    public String testRemember(T9UserRecord users, boolean remember) throws Exception {
         Subject subject = SecurityUtils.getSubject();
-        UsernamePasswordToken token = new UsernamePasswordToken(users.getUserName(), users.getPassword());
+        UsernamePasswordToken token = new UsernamePasswordToken(users.getUsername(), users.getPassword());
 
         try {
             token.setRememberMe(remember);

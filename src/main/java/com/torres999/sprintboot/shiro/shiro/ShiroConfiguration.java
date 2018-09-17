@@ -1,15 +1,19 @@
 package com.torres999.sprintboot.shiro.shiro;
 
 import com.torres999.sprintboot.shiro.shiro.realm.T9Realm;
-import com.torres999.sprintboot.shiro.utils.Roles;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.mgt.SecurityManager;
-import org.apache.shiro.realm.SimpleAccountRealm;
+import org.apache.shiro.session.mgt.eis.EnterpriseCacheSessionDAO;
+import org.apache.shiro.session.mgt.eis.JavaUuidSessionIdGenerator;
+import org.apache.shiro.session.mgt.quartz.QuartzSessionValidationScheduler;
+import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.CookieRememberMeManager;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.servlet.SimpleCookie;
+import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
+import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -17,7 +21,6 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-
 
 /**
  * @author t9
@@ -46,7 +49,7 @@ public class ShiroConfiguration {
 //    }
 
     /**
-     * 开启shiro aop注解支持. 使用代理方式;所以需要开启代码支持;但是测试没成功
+     * 开启shiro aop注解支持. 使用代理方式;所以需要开启代码支持
      *
      * @param securityManager
      * @return
@@ -58,9 +61,21 @@ public class ShiroConfiguration {
         return authorizationAttributeSourceAdvisor;
     }
 
+    @Bean
+    public static LifecycleBeanPostProcessor getLifecycleBeanPostProcessor() {
+        return new LifecycleBeanPostProcessor();
+    }
+
+    @Bean
+    public static DefaultAdvisorAutoProxyCreator getDefaultAdvisorAutoProxyCreator() {
+        return new DefaultAdvisorAutoProxyCreator();
+    }
+
 
     /**
      * 该方法启用后会强制跳转到/login页面，为了测试，加了put("/*", "anon")这句才通过的
+     * 如果在controller的method上加@RequiresRoles 等注解的方式，只会返回错误
+     * 如果使用该方法的ShiroFilterFactoryBean配置规则会进行页面的跳转
      *
      * @param securityManager
      * @return
@@ -76,23 +91,25 @@ public class ShiroConfiguration {
         // 登录成功后要跳转的链接
         shiroFilterFactoryBean.setSuccessUrl("/index");
         // 未授权界面
-        shiroFilterFactoryBean.setUnauthorizedUrl("/errorView/403_error.html");//不生效(详情原因看MyExceptionResolver)
+        shiroFilterFactoryBean.setUnauthorizedUrl("/403");
 
 
         Map<String, String> filterChainDefinitionMap = new LinkedHashMap();
-        // 配置退出过滤器,其中的具体的退出代码Shiro已经替我们实现了
-        filterChainDefinitionMap.put("/testPerms", "perms[user：get]");
-        //配置记住我或认证通过可以访问的地址
-        filterChainDefinitionMap.put("/testPerms1", "roles[admin1]");//这里验证时候用的角色是下面那个方法中的account不是第一个方法中的account
+//        // 配置退出过滤器,其中的具体的退出代码Shiro已经替我们实现了
+//        filterChainDefinitionMap.put("/testPerms", "perms['/testPerms']");
+        filterChainDefinitionMap.put("/testPerms", "roles[admin]");
+//        filterChainDefinitionMap.put("/testPerms", "perms[user：get]");
+//        //配置记住我或认证通过可以访问的地址
+//        filterChainDefinitionMap.put("/testPerms1", "roles[admin1]");//这里验证时候用的角色是下面那个方法中的account不是第一个方法中的account
 //        //开放的静态资源
-//        filterChainDefinitionMap.put("/favicon.ico", "anon");//网站图标
-//        filterChainDefinitionMap.put("/springboot-shiro/**", "anon");//配置static文件下资源能被访问的，这是个例子
-//        filterChainDefinitionMap.put("/kaptcha.jpg", "anon");//图片验证码(kaptcha框架)
-        filterChainDefinitionMap.put("/*", "anon");
+        filterChainDefinitionMap.put("/favicon.ico", "anon");//网站图标
+        filterChainDefinitionMap.put("/springboot-shiro/**", "anon");//配置static文件下资源能被访问的，这是个例子
+        filterChainDefinitionMap.put("/**.jpg", "anon");//图片验证码(kaptcha框架)
+        filterChainDefinitionMap.put("/submitLogin", "anon");
+        filterChainDefinitionMap.put("/*", "authc");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
         return shiroFilterFactoryBean;
     }
-
 
     /**
      * 配合上一个方法使用，否则启动报错。
@@ -103,29 +120,80 @@ public class ShiroConfiguration {
      */
     @Bean
     public SecurityManager securityManager() {
-        SimpleAccountRealm simpleAccountRealm = new SimpleAccountRealm();
-        simpleAccountRealm.addAccount("Mark12", "12311", Roles.ADMIN);//用这个用户访问密码不需要加盐
-
-        T9Realm t9Realm = new T9Realm();//用这里面的用户访问，传过来的密码需要加盐
-
         List list = new ArrayList<>();
-        list.add(simpleAccountRealm);
-        list.add(t9Realm);
+        list.add(getT9Realm());
 
-        DefaultWebSecurityManager securityManager;
-        securityManager = new DefaultWebSecurityManager();
+        DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
 //        securityManager.setRealm(simpleAccountRealm);
         securityManager.setRealms(list);
+        securityManager.setSessionManager(getSessionManager());
+        securityManager.setRememberMeManager(rememberMeManager());
 
         SecurityUtils.setSecurityManager(securityManager);
-
-        securityManager.setRememberMeManager(rememberMeManager());
 
         return securityManager;
     }
 
+    @Bean
+    public T9Realm getT9Realm() {
+        T9Realm t9Realm = new T9Realm();
+        return t9Realm;
+    }
 
-    //=====================================================================================
+//    @Bean
+//    public MyExceptionResolver getMyExceptionResolver() {
+//        return new MyExceptionResolver();
+//    }
+
+
+    //========================================session=============================================
+    @Bean
+    public DefaultWebSessionManager getSessionManager() {
+        // 配置Session DAO的操作处理
+        EnterpriseCacheSessionDAO sessionDAO = new EnterpriseCacheSessionDAO();
+        sessionDAO.setActiveSessionsCacheName("shiro-activeSessionCache");//设置session缓存的名字，这个名字可以任意
+        sessionDAO.setSessionIdGenerator(new JavaUuidSessionIdGenerator());//定义该Session DAO操作中所使用的ID生成器
+
+
+        // 配置需要向Cookie中保存数据的配置模版,定义session与客户端的之间的联系
+        SimpleCookie sessionIdCookie = new SimpleCookie("mldn-session-id");//在Tomcat运行下默认使用的Cookie的名字为JSESSIONID
+        sessionIdCookie.setHttpOnly(true);//保证该系统不会受到跨域的脚本操作攻击
+        sessionIdCookie.setMaxAge(-1);//定义Cookie的过期时间，单位为秒，如果设置为-1表示浏览器关闭，则Cookie消失
+
+
+        // 会话管理器
+        DefaultWebSessionManager sessionManager = new DefaultWebSessionManager();
+        sessionManager.setGlobalSessionTimeout(1000000);//session 有效时间为半小时 （毫秒单位）
+        sessionManager.setDeleteInvalidSessions(true);//删除所有无效的Session对象，此时的session被保存在了内存里面
+//        sessionManager.setSessionValidationScheduler(getQuartzSessionValidationScheduler());//调度器间隔多少时间检查，不配置是60分钟
+        sessionManager.setSessionValidationSchedulerEnabled(true);//需要让此session可以使用该定时调度器进行检测
+        sessionManager.setSessionDAO(sessionDAO);//定义Session可以进行序列化的工具类
+        sessionManager.setSessionIdCookie(sessionIdCookie);//所有的session一定要将id设置到Cookie之中，需要提供有Cookie的操作模版
+        sessionManager.setSessionIdCookieEnabled(true);//定义sessionIdCookie模版可以进行操作的启用
+        sessionManager.setDeleteInvalidSessions(true);//是否删除无效的，默认也是开启
+        //sessionManager.setSessionListeners();//session 监听，可以多个
+
+
+        return sessionManager;
+    }
+
+    /**
+     * 所有的session一定要在用户正确离开之后才能够进行资源的释放，但是用户如果不点注销，不能够进行session的清空处理，
+     * 所以为了防止这样的问题，还需要增加有一个会话的验证调度器。
+     *
+     * @return
+     */
+    @Bean
+    public QuartzSessionValidationScheduler getQuartzSessionValidationScheduler() {
+        QuartzSessionValidationScheduler scheduler = new QuartzSessionValidationScheduler();
+        scheduler.setSessionValidationInterval(100000);//相隔多久检查一次session的有效性，单位为毫秒
+        scheduler.setSessionManager(getSessionManager());//随后还需要定义有一个会话管理器的程序类的引用
+
+        return scheduler;
+    }
+
+
+    //========================================cookie=============================================
 
     /**
      * cookie管理对象;
@@ -152,5 +220,4 @@ public class ShiroConfiguration {
         simpleCookie.setMaxAge(259200);
         return simpleCookie;
     }
-
 }

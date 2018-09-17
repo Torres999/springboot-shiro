@@ -4,20 +4,19 @@
 package com.torres999.sprintboot.shiro.dao.jooq;
 
 
-import com.torres999.sprintboot.shiro.dao.jooq.tables.Permission;
-import com.torres999.sprintboot.shiro.dao.jooq.tables.Role;
-import com.torres999.sprintboot.shiro.dao.jooq.tables.RolesPermissions;
-import com.torres999.sprintboot.shiro.dao.jooq.tables.UserRoles;
-import com.torres999.sprintboot.shiro.dao.jooq.tables.Users;
-import com.torres999.sprintboot.shiro.dao.jooq.tables.records.PermissionRecord;
-import com.torres999.sprintboot.shiro.dao.jooq.tables.records.RoleRecord;
-import com.torres999.sprintboot.shiro.dao.jooq.tables.records.RolesPermissionsRecord;
-import com.torres999.sprintboot.shiro.dao.jooq.tables.records.UserRolesRecord;
-import com.torres999.sprintboot.shiro.dao.jooq.tables.records.UsersRecord;
+import com.torres999.sprintboot.shiro.dao.jooq.tables.T9Permission;
+import com.torres999.sprintboot.shiro.dao.jooq.tables.T9Role;
+import com.torres999.sprintboot.shiro.dao.jooq.tables.T9RolePermission;
+import com.torres999.sprintboot.shiro.dao.jooq.tables.T9User;
+import com.torres999.sprintboot.shiro.dao.jooq.tables.T9UserRole;
+import com.torres999.sprintboot.shiro.dao.jooq.tables.records.T9PermissionRecord;
+import com.torres999.sprintboot.shiro.dao.jooq.tables.records.T9RolePermissionRecord;
+import com.torres999.sprintboot.shiro.dao.jooq.tables.records.T9RoleRecord;
+import com.torres999.sprintboot.shiro.dao.jooq.tables.records.T9UserRecord;
+import com.torres999.sprintboot.shiro.dao.jooq.tables.records.T9UserRoleRecord;
 
 import javax.annotation.Generated;
 
-import org.jooq.ForeignKey;
 import org.jooq.Identity;
 import org.jooq.UniqueKey;
 import org.jooq.impl.AbstractKeys;
@@ -42,55 +41,44 @@ public class Keys {
     // IDENTITY definitions
     // -------------------------------------------------------------------------
 
-    public static final Identity<PermissionRecord, UInteger> IDENTITY_PERMISSION = Identities0.IDENTITY_PERMISSION;
-    public static final Identity<RoleRecord, UInteger> IDENTITY_ROLE = Identities0.IDENTITY_ROLE;
-    public static final Identity<RolesPermissionsRecord, UInteger> IDENTITY_ROLES_PERMISSIONS = Identities0.IDENTITY_ROLES_PERMISSIONS;
-    public static final Identity<UsersRecord, UInteger> IDENTITY_USERS = Identities0.IDENTITY_USERS;
-    public static final Identity<UserRolesRecord, UInteger> IDENTITY_USER_ROLES = Identities0.IDENTITY_USER_ROLES;
+    public static final Identity<T9PermissionRecord, UInteger> IDENTITY_T9_PERMISSION = Identities0.IDENTITY_T9_PERMISSION;
+    public static final Identity<T9RoleRecord, UInteger> IDENTITY_T9_ROLE = Identities0.IDENTITY_T9_ROLE;
+    public static final Identity<T9RolePermissionRecord, UInteger> IDENTITY_T9_ROLE_PERMISSION = Identities0.IDENTITY_T9_ROLE_PERMISSION;
+    public static final Identity<T9UserRecord, UInteger> IDENTITY_T9_USER = Identities0.IDENTITY_T9_USER;
+    public static final Identity<T9UserRoleRecord, UInteger> IDENTITY_T9_USER_ROLE = Identities0.IDENTITY_T9_USER_ROLE;
 
     // -------------------------------------------------------------------------
     // UNIQUE and PRIMARY KEY definitions
     // -------------------------------------------------------------------------
 
-    public static final UniqueKey<PermissionRecord> KEY_PERMISSION_PRIMARY = UniqueKeys0.KEY_PERMISSION_PRIMARY;
-    public static final UniqueKey<RoleRecord> KEY_ROLE_PRIMARY = UniqueKeys0.KEY_ROLE_PRIMARY;
-    public static final UniqueKey<RolesPermissionsRecord> KEY_ROLES_PERMISSIONS_PRIMARY = UniqueKeys0.KEY_ROLES_PERMISSIONS_PRIMARY;
-    public static final UniqueKey<UsersRecord> KEY_USERS_PRIMARY = UniqueKeys0.KEY_USERS_PRIMARY;
-    public static final UniqueKey<UserRolesRecord> KEY_USER_ROLES_PRIMARY = UniqueKeys0.KEY_USER_ROLES_PRIMARY;
+    public static final UniqueKey<T9PermissionRecord> KEY_T9_PERMISSION_PRIMARY = UniqueKeys0.KEY_T9_PERMISSION_PRIMARY;
+    public static final UniqueKey<T9RoleRecord> KEY_T9_ROLE_PRIMARY = UniqueKeys0.KEY_T9_ROLE_PRIMARY;
+    public static final UniqueKey<T9RolePermissionRecord> KEY_T9_ROLE_PERMISSION_PRIMARY = UniqueKeys0.KEY_T9_ROLE_PERMISSION_PRIMARY;
+    public static final UniqueKey<T9UserRecord> KEY_T9_USER_PRIMARY = UniqueKeys0.KEY_T9_USER_PRIMARY;
+    public static final UniqueKey<T9UserRoleRecord> KEY_T9_USER_ROLE_PRIMARY = UniqueKeys0.KEY_T9_USER_ROLE_PRIMARY;
 
     // -------------------------------------------------------------------------
     // FOREIGN KEY definitions
     // -------------------------------------------------------------------------
 
-    public static final ForeignKey<RolesPermissionsRecord, PermissionRecord> PERMISSION_ID外键 = ForeignKeys0.PERMISSION_ID外键;
-    public static final ForeignKey<RolesPermissionsRecord, RoleRecord> ROLE_ID外键1 = ForeignKeys0.ROLE_ID外键1;
-    public static final ForeignKey<UserRolesRecord, UsersRecord> USER_ID外键 = ForeignKeys0.USER_ID外键;
-    public static final ForeignKey<UserRolesRecord, RoleRecord> ROLE_ID外键 = ForeignKeys0.ROLE_ID外键;
 
     // -------------------------------------------------------------------------
     // [#1459] distribute members to avoid static initialisers > 64kb
     // -------------------------------------------------------------------------
 
     private static class Identities0 extends AbstractKeys {
-        public static Identity<PermissionRecord, UInteger> IDENTITY_PERMISSION = createIdentity(Permission.PERMISSION, Permission.PERMISSION.PERMISSION_ID);
-        public static Identity<RoleRecord, UInteger> IDENTITY_ROLE = createIdentity(Role.ROLE, Role.ROLE.ROLE_ID);
-        public static Identity<RolesPermissionsRecord, UInteger> IDENTITY_ROLES_PERMISSIONS = createIdentity(RolesPermissions.ROLES_PERMISSIONS, RolesPermissions.ROLES_PERMISSIONS.ID);
-        public static Identity<UsersRecord, UInteger> IDENTITY_USERS = createIdentity(Users.USERS, Users.USERS.USER_ID);
-        public static Identity<UserRolesRecord, UInteger> IDENTITY_USER_ROLES = createIdentity(UserRoles.USER_ROLES, UserRoles.USER_ROLES.ID);
+        public static Identity<T9PermissionRecord, UInteger> IDENTITY_T9_PERMISSION = createIdentity(T9Permission.T9_PERMISSION, T9Permission.T9_PERMISSION.PERMISSION_ID);
+        public static Identity<T9RoleRecord, UInteger> IDENTITY_T9_ROLE = createIdentity(T9Role.T9_ROLE, T9Role.T9_ROLE.ROLE_ID);
+        public static Identity<T9RolePermissionRecord, UInteger> IDENTITY_T9_ROLE_PERMISSION = createIdentity(T9RolePermission.T9_ROLE_PERMISSION, T9RolePermission.T9_ROLE_PERMISSION.ID);
+        public static Identity<T9UserRecord, UInteger> IDENTITY_T9_USER = createIdentity(T9User.T9_USER, T9User.T9_USER.USER_ID);
+        public static Identity<T9UserRoleRecord, UInteger> IDENTITY_T9_USER_ROLE = createIdentity(T9UserRole.T9_USER_ROLE, T9UserRole.T9_USER_ROLE.ID);
     }
 
     private static class UniqueKeys0 extends AbstractKeys {
-        public static final UniqueKey<PermissionRecord> KEY_PERMISSION_PRIMARY = createUniqueKey(Permission.PERMISSION, "KEY_permission_PRIMARY", Permission.PERMISSION.PERMISSION_ID);
-        public static final UniqueKey<RoleRecord> KEY_ROLE_PRIMARY = createUniqueKey(Role.ROLE, "KEY_role_PRIMARY", Role.ROLE.ROLE_ID);
-        public static final UniqueKey<RolesPermissionsRecord> KEY_ROLES_PERMISSIONS_PRIMARY = createUniqueKey(RolesPermissions.ROLES_PERMISSIONS, "KEY_roles_permissions_PRIMARY", RolesPermissions.ROLES_PERMISSIONS.ID);
-        public static final UniqueKey<UsersRecord> KEY_USERS_PRIMARY = createUniqueKey(Users.USERS, "KEY_users_PRIMARY", Users.USERS.USER_ID);
-        public static final UniqueKey<UserRolesRecord> KEY_USER_ROLES_PRIMARY = createUniqueKey(UserRoles.USER_ROLES, "KEY_user_roles_PRIMARY", UserRoles.USER_ROLES.ID);
-    }
-
-    private static class ForeignKeys0 extends AbstractKeys {
-        public static final ForeignKey<RolesPermissionsRecord, PermissionRecord> PERMISSION_ID外键 = createForeignKey(com.torres999.sprintboot.shiro.dao.jooq.Keys.KEY_PERMISSION_PRIMARY, RolesPermissions.ROLES_PERMISSIONS, "permission_id外键", RolesPermissions.ROLES_PERMISSIONS.PERMISSION_ID);
-        public static final ForeignKey<RolesPermissionsRecord, RoleRecord> ROLE_ID外键1 = createForeignKey(com.torres999.sprintboot.shiro.dao.jooq.Keys.KEY_ROLE_PRIMARY, RolesPermissions.ROLES_PERMISSIONS, "role_id外键1", RolesPermissions.ROLES_PERMISSIONS.ROLE_ID);
-        public static final ForeignKey<UserRolesRecord, UsersRecord> USER_ID外键 = createForeignKey(com.torres999.sprintboot.shiro.dao.jooq.Keys.KEY_USERS_PRIMARY, UserRoles.USER_ROLES, "user_id外键", UserRoles.USER_ROLES.USER_ID);
-        public static final ForeignKey<UserRolesRecord, RoleRecord> ROLE_ID外键 = createForeignKey(com.torres999.sprintboot.shiro.dao.jooq.Keys.KEY_ROLE_PRIMARY, UserRoles.USER_ROLES, "role_id外键", UserRoles.USER_ROLES.ROLE_ID);
+        public static final UniqueKey<T9PermissionRecord> KEY_T9_PERMISSION_PRIMARY = createUniqueKey(T9Permission.T9_PERMISSION, "KEY_t9_permission_PRIMARY", T9Permission.T9_PERMISSION.PERMISSION_ID);
+        public static final UniqueKey<T9RoleRecord> KEY_T9_ROLE_PRIMARY = createUniqueKey(T9Role.T9_ROLE, "KEY_t9_role_PRIMARY", T9Role.T9_ROLE.ROLE_ID);
+        public static final UniqueKey<T9RolePermissionRecord> KEY_T9_ROLE_PERMISSION_PRIMARY = createUniqueKey(T9RolePermission.T9_ROLE_PERMISSION, "KEY_t9_role_permission_PRIMARY", T9RolePermission.T9_ROLE_PERMISSION.ID);
+        public static final UniqueKey<T9UserRecord> KEY_T9_USER_PRIMARY = createUniqueKey(T9User.T9_USER, "KEY_t9_user_PRIMARY", T9User.T9_USER.USER_ID);
+        public static final UniqueKey<T9UserRoleRecord> KEY_T9_USER_ROLE_PRIMARY = createUniqueKey(T9UserRole.T9_USER_ROLE, "KEY_t9_user_role_PRIMARY", T9UserRole.T9_USER_ROLE.ID);
     }
 }

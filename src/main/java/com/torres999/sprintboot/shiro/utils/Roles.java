@@ -7,5 +7,4 @@ public class Roles {
 
     public final static String ADMIN = "admin";
     public final static String MANAGER = "manager";
-
 }

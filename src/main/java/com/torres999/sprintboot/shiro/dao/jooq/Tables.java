@@ -4,11 +4,11 @@
 package com.torres999.sprintboot.shiro.dao.jooq;
 
 
-import com.torres999.sprintboot.shiro.dao.jooq.tables.Permission;
-import com.torres999.sprintboot.shiro.dao.jooq.tables.Role;
-import com.torres999.sprintboot.shiro.dao.jooq.tables.RolesPermissions;
-import com.torres999.sprintboot.shiro.dao.jooq.tables.UserRoles;
-import com.torres999.sprintboot.shiro.dao.jooq.tables.Users;
+import com.torres999.sprintboot.shiro.dao.jooq.tables.T9Permission;
+import com.torres999.sprintboot.shiro.dao.jooq.tables.T9Role;
+import com.torres999.sprintboot.shiro.dao.jooq.tables.T9RolePermission;
+import com.torres999.sprintboot.shiro.dao.jooq.tables.T9User;
+import com.torres999.sprintboot.shiro.dao.jooq.tables.T9UserRole;
 
 import javax.annotation.Generated;
 
@@ -27,27 +27,27 @@ import javax.annotation.Generated;
 public class Tables {
 
     /**
-     * The table <code>shiro.permission</code>.
+     * The table <code>shiro.t9_permission</code>.
      */
-    public static final Permission PERMISSION = com.torres999.sprintboot.shiro.dao.jooq.tables.Permission.PERMISSION;
+    public static final T9Permission T9_PERMISSION = com.torres999.sprintboot.shiro.dao.jooq.tables.T9Permission.T9_PERMISSION;
 
     /**
-     * The table <code>shiro.role</code>.
+     * The table <code>shiro.t9_role</code>.
      */
-    public static final Role ROLE = com.torres999.sprintboot.shiro.dao.jooq.tables.Role.ROLE;
+    public static final T9Role T9_ROLE = com.torres999.sprintboot.shiro.dao.jooq.tables.T9Role.T9_ROLE;
 
     /**
-     * The table <code>shiro.roles_permissions</code>.
+     * The table <code>shiro.t9_role_permission</code>.
      */
-    public static final RolesPermissions ROLES_PERMISSIONS = com.torres999.sprintboot.shiro.dao.jooq.tables.RolesPermissions.ROLES_PERMISSIONS;
+    public static final T9RolePermission T9_ROLE_PERMISSION = com.torres999.sprintboot.shiro.dao.jooq.tables.T9RolePermission.T9_ROLE_PERMISSION;
 
     /**
-     * The table <code>shiro.users</code>.
+     * The table <code>shiro.t9_user</code>.
      */
-    public static final Users USERS = com.torres999.sprintboot.shiro.dao.jooq.tables.Users.USERS;
+    public static final T9User T9_USER = com.torres999.sprintboot.shiro.dao.jooq.tables.T9User.T9_USER;
 
     /**
-     * The table <code>shiro.user_roles</code>.
+     * The table <code>shiro.t9_user_role</code>.
      */
-    public static final UserRoles USER_ROLES = com.torres999.sprintboot.shiro.dao.jooq.tables.UserRoles.USER_ROLES;
+    public static final T9UserRole T9_USER_ROLE = com.torres999.sprintboot.shiro.dao.jooq.tables.T9UserRole.T9_USER_ROLE;
 }

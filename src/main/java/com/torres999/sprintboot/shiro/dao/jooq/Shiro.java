@@ -4,11 +4,11 @@
 package com.torres999.sprintboot.shiro.dao.jooq;
 
 
-import com.torres999.sprintboot.shiro.dao.jooq.tables.Permission;
-import com.torres999.sprintboot.shiro.dao.jooq.tables.Role;
-import com.torres999.sprintboot.shiro.dao.jooq.tables.RolesPermissions;
-import com.torres999.sprintboot.shiro.dao.jooq.tables.UserRoles;
-import com.torres999.sprintboot.shiro.dao.jooq.tables.Users;
+import com.torres999.sprintboot.shiro.dao.jooq.tables.T9Permission;
+import com.torres999.sprintboot.shiro.dao.jooq.tables.T9Role;
+import com.torres999.sprintboot.shiro.dao.jooq.tables.T9RolePermission;
+import com.torres999.sprintboot.shiro.dao.jooq.tables.T9User;
+import com.torres999.sprintboot.shiro.dao.jooq.tables.T9UserRole;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -34,7 +34,7 @@ import org.jooq.impl.SchemaImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Shiro extends SchemaImpl {
 
-    private static final long serialVersionUID = 2132001396;
+    private static final long serialVersionUID = -67527512;
 
     /**
      * The reference instance of <code>shiro</code>
@@ -42,29 +42,29 @@ public class Shiro extends SchemaImpl {
     public static final Shiro SHIRO = new Shiro();
 
     /**
-     * The table <code>shiro.permission</code>.
+     * The table <code>shiro.t9_permission</code>.
      */
-    public final Permission PERMISSION = com.torres999.sprintboot.shiro.dao.jooq.tables.Permission.PERMISSION;
+    public final T9Permission T9_PERMISSION = com.torres999.sprintboot.shiro.dao.jooq.tables.T9Permission.T9_PERMISSION;
 
     /**
-     * The table <code>shiro.role</code>.
+     * The table <code>shiro.t9_role</code>.
      */
-    public final Role ROLE = com.torres999.sprintboot.shiro.dao.jooq.tables.Role.ROLE;
+    public final T9Role T9_ROLE = com.torres999.sprintboot.shiro.dao.jooq.tables.T9Role.T9_ROLE;
 
     /**
-     * The table <code>shiro.roles_permissions</code>.
+     * The table <code>shiro.t9_role_permission</code>.
      */
-    public final RolesPermissions ROLES_PERMISSIONS = com.torres999.sprintboot.shiro.dao.jooq.tables.RolesPermissions.ROLES_PERMISSIONS;
+    public final T9RolePermission T9_ROLE_PERMISSION = com.torres999.sprintboot.shiro.dao.jooq.tables.T9RolePermission.T9_ROLE_PERMISSION;
 
     /**
-     * The table <code>shiro.users</code>.
+     * The table <code>shiro.t9_user</code>.
      */
-    public final Users USERS = com.torres999.sprintboot.shiro.dao.jooq.tables.Users.USERS;
+    public final T9User T9_USER = com.torres999.sprintboot.shiro.dao.jooq.tables.T9User.T9_USER;
 
     /**
-     * The table <code>shiro.user_roles</code>.
+     * The table <code>shiro.t9_user_role</code>.
      */
-    public final UserRoles USER_ROLES = com.torres999.sprintboot.shiro.dao.jooq.tables.UserRoles.USER_ROLES;
+    public final T9UserRole T9_USER_ROLE = com.torres999.sprintboot.shiro.dao.jooq.tables.T9UserRole.T9_USER_ROLE;
 
     /**
      * No further instances allowed
@@ -91,10 +91,10 @@ public class Shiro extends SchemaImpl {
 
     private final List<Table<?>> getTables0() {
         return Arrays.<Table<?>>asList(
-            Permission.PERMISSION,
-            Role.ROLE,
-            RolesPermissions.ROLES_PERMISSIONS,
-            Users.USERS,
-            UserRoles.USER_ROLES);
+            T9Permission.T9_PERMISSION,
+            T9Role.T9_ROLE,
+            T9RolePermission.T9_ROLE_PERMISSION,
+            T9User.T9_USER,
+            T9UserRole.T9_USER_ROLE);
     }
 }

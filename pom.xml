@@ -1,238 +1,257 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.torres999</groupId>
-	<artifactId>springboot-shiro</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
+    <groupId>com.torres999</groupId>
+    <artifactId>springboot-shiro</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <packaging>war</packaging>
 
-	<name>springboot-shiro</name>
-	<description>Learning shiro</description>
+    <name>springboot-shiro</name>
+    <description>Learning shiro</description>
 
-	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>1.5.13.RELEASE</version>
-		<relativePath/> <!-- lookup parent from repository -->
-	</parent>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>1.5.13.RELEASE</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
 
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<java.version>1.8</java.version>
-		<jooq.version>3.8.6</jooq.version>
-		<mysql.version>5.1.40</mysql.version>
-	</properties>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <java.version>1.8</java.version>
+        <jooq.version>3.8.6</jooq.version>
+        <mysql.version>5.1.40</mysql.version>
+    </properties>
 
-	<dependencies>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-jooq</artifactId>
-		</dependency>
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jooq</artifactId>
+        </dependency>
 
-		<!--<dependency>-->
-			<!--<groupId>org.springframework.boot</groupId>-->
-			<!--<artifactId>spring-boot-starter-thymeleaf</artifactId>-->
-		<!--</dependency>-->
+        <!--<dependency>-->
+        <!--<groupId>org.springframework.boot</groupId>-->
+        <!--<artifactId>spring-boot-starter-thymeleaf</artifactId>-->
+        <!--</dependency>-->
 
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
-		</dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
 
-		<!--<dependency>-->
-			<!--<groupId>org.springframework.boot</groupId>-->
-			<!--<artifactId>spring-boot-devtools</artifactId>-->
-			<!--<scope>runtime</scope>-->
-		<!--</dependency>-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <scope>runtime</scope>
+        </dependency>
 
-		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-			<optional>true</optional>
-		</dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
 
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
-		</dependency>
-
-
-		<!-- =================jooq================= -->
-		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-			<version>${mysql.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.jooq</groupId>
-			<artifactId>jooq</artifactId>
-			<version>${jooq.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.jooq</groupId>
-			<artifactId>jooq-meta</artifactId>
-			<version>${jooq.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.jooq</groupId>
-			<artifactId>jooq-codegen</artifactId>
-			<version>${jooq.version}</version>
-		</dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
 
 
-		<!-- =================shiro================= -->
-		<!-- shiro 权限控制 -->
+        <!-- =================jooq================= -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>${mysql.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jooq</groupId>
+            <artifactId>jooq</artifactId>
+            <version>${jooq.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jooq</groupId>
+            <artifactId>jooq-meta</artifactId>
+            <version>${jooq.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jooq</groupId>
+            <artifactId>jooq-codegen</artifactId>
+            <version>${jooq.version}</version>
+        </dependency>
+
+
+        <!-- =================shiro================= -->
+        <!-- shiro 权限控制 -->
         <dependency>
             <groupId>org.apache.shiro</groupId>
             <artifactId>shiro-spring</artifactId>
             <version>1.3.2</version>
         </dependency>
 
-		<!-- shiro ehcache (shiro缓存)-->
-		<!-- https://mvnrepository.com/artifact/org.apache.shiro/shiro-ehcache -->
-		<dependency>
-			<groupId>org.apache.shiro</groupId>
-			<artifactId>shiro-ehcache</artifactId>
-			<version>1.2.2</version>
-			<exclusions>
-				<exclusion>
-					<groupId>org.apache.shiro</groupId>
-					<artifactId>shiro-core</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
+        <!-- shiro ehcache (shiro缓存)-->
+        <!-- https://mvnrepository.com/artifact/org.apache.shiro/shiro-ehcache -->
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-ehcache</artifactId>
+            <version>1.2.2</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.apache.shiro</groupId>
+                    <artifactId>shiro-core</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-core</artifactId>
+            <version>1.3.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-quartz</artifactId>
+            <version>1.2.5</version>
+        </dependency>
 
 
-		<!-- ================= JSP ================= -->
-		<dependency>
-			<groupId>org.apache.tomcat.embed</groupId>
-			<artifactId>tomcat-embed-jasper</artifactId>
-			<scope>provided</scope>
-		</dependency>
+        <!-- ================= JSP ================= -->
+        <dependency>
+            <groupId>org.apache.tomcat.embed</groupId>
+            <artifactId>tomcat-embed-jasper</artifactId>
+            <scope>provided</scope>
+        </dependency>
 
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>javax.servlet-api</artifactId>
-		</dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+        </dependency>
 
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>jstl</artifactId>
-		</dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>jstl</artifactId>
+        </dependency>
 
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.8.0</version>
+        </dependency>
 
-	</dependencies>
-
-	<dependencyManagement>
-		<dependencies>
-			<dependency>
-				<groupId>org.springframework.cloud</groupId>
-				<artifactId>spring-cloud-dependencies</artifactId>
-				<version>Dalston.SR5</version>
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency>
-		</dependencies>
-	</dependencyManagement>
-
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-				<dependencies>
-					<dependency>
-						<groupId>org.springframework</groupId>
-						<artifactId>springloaded</artifactId>
-						<version>1.2.6.release</version>
-					</dependency>
-				</dependencies>
-			</plugin>
-
-			<plugin>
-				<groupId>org.jooq</groupId>
-				<artifactId>jooq-codegen-maven</artifactId>
-				<version>${jooq.version}</version>
-
-				<executions>
-					<execution>
-						<goals>
-							<goal>generate</goal>
-						</goals>
-					</execution>
-				</executions>
-
-				<dependencies>
-					<dependency>
-						<groupId>mysql</groupId>
-						<artifactId>mysql-connector-java</artifactId>
-						<version>${mysql.version}</version>
-					</dependency>
-				</dependencies>
-
-				<configuration>
-					<jdbc>
-						<driver>com.mysql.jdbc.Driver</driver>
-						<url>jdbc:mysql://localhost:3306/</url>
-						<user>root</user>
-						<password>123456</password>
-					</jdbc>
-
-					<generator>
-						<database>
-							<name>org.jooq.util.mariadb.MariaDBDatabase</name>
-							<includes>.*</includes>
-							<excludes />
-							<inputSchema>shiro</inputSchema>
-							<!--<forcedTypes>-->
-							<!--<forcedType>-->
-							<!--<name>BOOLEAN</name>-->
-							<!--<types>(?i:TINYINT(\s*\(\d+\))?(\s*UNSIGNED)?)</types>-->
-							<!--</forcedType>-->
-							<!--</forcedTypes>-->
-						</database>
-						<generate>
-							<daos>true</daos>
-							<pojos>true</pojos>
-							<springAnnotations>true</springAnnotations>
-						</generate>
-						<!--<generate>-->
-						<!--<deprecated>false</deprecated>-->
-						<!--</generate>-->
-						<target>
-							<packageName>com.torres999.sprintboot.shiro.dao.jooq</packageName>
-							<directory>src/main/java</directory>
-						</target>
-					</generator>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
+        <dependency>
+            <groupId>commons-lang</groupId>
+            <artifactId>commons-lang</artifactId>
+            <version>2.4</version>
+        </dependency>
 
 
+    </dependencies>
 
-	<profiles>
-		<profile>
-			<!-- 开发环境 -->
-			<id>dev</id>
-			<properties>
-				<profiles.active>dev</profiles.active>
-			</properties>
-		</profile>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>Dalston.SR5</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.springframework</groupId>
+                        <artifactId>springloaded</artifactId>
+                        <version>1.2.6.release</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+
+            <plugin>
+                <groupId>org.jooq</groupId>
+                <artifactId>jooq-codegen-maven</artifactId>
+                <version>${jooq.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                    </execution>
+                </executions>
+
+                <dependencies>
+                    <dependency>
+                        <groupId>mysql</groupId>
+                        <artifactId>mysql-connector-java</artifactId>
+                        <version>${mysql.version}</version>
+                    </dependency>
+                </dependencies>
+
+                <configuration>
+                    <jdbc>
+                        <driver>com.mysql.jdbc.Driver</driver>
+                        <url>jdbc:mysql://localhost:3306/</url>
+                        <user>root</user>
+                        <password>123456</password>
+                    </jdbc>
+                    <generator>
+                        <database>
+                            <name>org.jooq.util.mysql.MySQLDatabase</name>
+                            <includes>.*</includes>
+                            <excludes/>
+                            <inputSchema>shiro</inputSchema>
+                            <!--<forcedTypes>-->
+                            <!--<forcedType>-->
+                            <!--<name>BOOLEAN</name>-->
+                            <!--<types>(?i:TINYINT(\s*\(\d+\))?(\s*UNSIGNED)?)</types>-->
+                            <!--</forcedType>-->
+                            <!--</forcedTypes>-->
+                        </database>
+                        <generate>
+                            <daos>true</daos>
+                            <pojos>true</pojos>
+                            <springAnnotations>true</springAnnotations>
+                        </generate>
+                        <!--<generate>-->
+                        <!--<deprecated>false</deprecated>-->
+                        <!--</generate>-->
+                        <target>
+                            <packageName>com.torres999.sprintboot.shiro.dao.jooq</packageName>
+                            <directory>src/main/java</directory>
+                        </target>
+                    </generator>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
 
-		<profile>
-			<!-- uat环境 -->
-			<id>uat</id>
-			<properties>
-				<profiles.active>uat</profiles.active>
-			</properties>
-		</profile>
+    <profiles>
+        <profile>
+            <!-- 开发环境 -->
+            <id>dev</id>
+            <properties>
+                <profiles.active>dev</profiles.active>
+            </properties>
+        </profile>
 
-	</profiles>
+        <profile>
+            <!-- uat环境 -->
+            <id>uat</id>
+            <properties>
+                <profiles.active>uat</profiles.active>
+            </properties>
+        </profile>
+    </profiles>
 
 </project>
